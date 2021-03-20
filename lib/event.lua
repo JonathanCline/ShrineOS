@@ -44,7 +44,6 @@ event.idle = function(_timeout)
     local timeout = _timeout or 1
     local _signal, _args = pack_signal(computer.pullSignal(timeout))
     if _signal then
-        computer.beep(500, 0.2)
         local cSet = SignalCallbacks[_signal]
         if cSet then
             for k, v in pairs(cSet) do

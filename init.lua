@@ -5,7 +5,8 @@ local table = table
 
 local gpu = component.list("gpu")()
 local screen = component.list("screen")()
- 
+local keyboard = component.invoke(screen, "getKeyboards")[1]
+
 do
     component.invoke(gpu, "bind", screen, true)
     component.invoke(gpu, "set", 1, 1, "ShrineOS")
@@ -63,7 +64,7 @@ SelectedFS = 1
 
 local function keyup_callback(_signal, _keyboard, char, _, _)
     SelectedFS = tonumber(char)
-    component.invoke(gpu, "set", 1, sy + 1, tostring(SelectedFS))
+    component.invoke(gpu, "set", 1, 10, tostring(SelectedFS))
     return true
 end
 
