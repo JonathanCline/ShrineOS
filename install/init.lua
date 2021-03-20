@@ -14,19 +14,21 @@ end
 
 local bootFileSystem = computer.getBootAddress()
 
-function loadfile(_path)
-    local file = component.invoke(bootFileSystem, "open", _path, "r")
+function loadfile(_path, _filesystem)
+    local fs = _filesystem or bootFileSystem 
+    local file = component.invoke(fs, "open", _path, "r")
     local fileData = ""
-    local gotData = component.invoke(bootFileSystem, "read", file, 64)
+    local gotData = component.invoke(fs, "read", file, 64)
     while gotData do
         fileData = fileData .. gotData
-        gotData = component.invoke(bootFileSystem, "read", file, 64)
+        gotData = component.invoke(fs, "read", file, 64)
     end
     return fileData
 end
 
-function dofile(_path, ...)
-    local fData = loadfile(_path)
+function dofile(_path, _filesystem, ...)
+    local fs = _filesystem or bootFileSystem
+    local fData = loadfile(_path, fs)
     local fFunc = load(fData)
     if not fFunc then
         return false
@@ -59,8 +61,7 @@ end
 
 local dfs = component.proxy(DiskAddr)
 if dfs.exists("/.install") then
-    local ifile = dfs.open("/.install")
-    dofile(ifile, computer.getBootAddress())
+    dofile("/.install", dfs.address)
 end
 
 computer.shutdown()
