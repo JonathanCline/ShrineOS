@@ -50,27 +50,21 @@ do
 end
 
 component.invoke(gpu, "set", 1, 2, "Select Install Destination")
+
+local bestFilesystem = component.list("filesystem")()
+
 local sy = 3
 for k, v in pairs(fsList) do
     component.invoke(gpu, "set", 1, sy, tostring(sy - 2) .. " " .. k)
     sy = sy + 1
+
+    if component.invoke(bestFilesystem, "spaceTotal") >
+        component.invoke(v, "spaceTotal") then
+        bestFilesystem = v
+    end
 end
 
-
-
-local _, event = dofile("./lib/event.lua")
-
-SelectedFS = 1
-
-local function keyup_callback(_signal, _keyboard, char, _, _)
-    SelectedFS = tonumber(char)
-    component.invoke(gpu, "set", 1, 10, tostring(SelectedFS))
-    return true
-end
-
-event.listen("key_up", keyup_callback)
-while true do
-    event.idle()
-end
+component.invoke(bestFilesystem, "setLabel", "root")
+component.invoke(bestFilesystem, "makeDirectory", "/lib")
 
 computer.shutdown()
