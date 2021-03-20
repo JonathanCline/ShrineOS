@@ -58,7 +58,7 @@ for k, v in pairs(fsList) do
     component.invoke(gpu, "set", 1, sy, tostring(sy - 2) .. " " .. k)
     sy = sy + 1
 
-    if component.invoke(bestFilesystem, "spaceTotal") >
+    if component.invoke(bestFilesystem, "spaceTotal") <
         component.invoke(v, "spaceTotal") then
         bestFilesystem = v
     end
