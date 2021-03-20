@@ -64,7 +64,20 @@ for k, v in pairs(fsList) do
     end
 end
 
-component.invoke(bestFilesystem, "setLabel", "root")
-component.invoke(bestFilesystem, "makeDirectory", "/lib")
+component.invoke(bestFilesystem, "setLabel", "ShrineOS")
+
+do
+    local fileData = loadfile("/install/init.lua")
+    local file = component.invoke(bestFilesystem, "open", "init.lua", "w")
+    component.invoke(bestFilesystem, "write", file, fileData)
+    component.invoke(bestFilesystem, "close", file)
+end
+
+do
+    local fileData = loadfile("/install/event.lua")
+    local file = component.invoke(bestFilesystem, "open", "event.lua", "w")
+    component.invoke(bestFilesystem, "write", file, fileData)
+    component.invoke(bestFilesystem, "close", file)
+end
 
 computer.shutdown()
