@@ -1,5 +1,5 @@
 local libstr = [[
-local component = require("component.lua")
+local component = _, require("component.lua")
 
 GFXDisplayList = nil
 GFXDisplayList = {}
@@ -29,3 +29,5 @@ end
 
 local _, insLib = require("inslib.lua")
 insLib.add_boot("01_gfx.lua", libstr)
+
+computer.pullSignal()
