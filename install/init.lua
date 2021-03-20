@@ -44,21 +44,23 @@ if not DiskDrive then
     computer.beep(750, 0.4)
     computer.beep(750, 0.4)
     error("No disk drive")
+    computer.shutdown()
     return
 end
 
-local function component_added(_signal, _address, _type)
-    component.invoke(gpu, "fill", 1, 4, 32, 6, " ")
-    component.invoke(gpu, "set", 1, 4, _address)
-    component.invoke(gpu, "set", 1, 5, _type)
-    return true
+local DiskAddr = component.invoke(DiskDrive, "media")
+if not DiskAddr then
+    computer.beep(750, 0.4)
+    computer.beep(750, 0.4)
+    error("No additional installation disk")
+    computer.shutdown()
+    return
 end
 
-local _, event = dofile("/event.lua")
-event.listen("component_added", component_added)
-
-while true do
-    event.idle()
+local dfs = component.proxy(DiskAddr)
+if dfs.exists("/.install") then
+    local ifile = dfs.open("/.install")
+    dofile(ifile, computer.getBootAddress())
 end
 
 computer.shutdown()
