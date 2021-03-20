@@ -1,5 +1,5 @@
 local libstr = [[
-local component = _, require("component.lua")
+local component = component
 
 GFXDisplayList = nil
 GFXDisplayList = {}
@@ -24,6 +24,21 @@ do
         gpu = gpu_iter()
     end
 
+end
+
+Terminal = {}
+if #GFXDisplayList > 0 then
+    Terminal = GFXDisplayList[1]
+end
+
+Terminal.refresh = function()
+    Terminal.cmin = 1
+    Terminal.cy = Terminal.cmin
+    _, Terminal.cmax = component.invoke(Terminal.gpu, "maxResolution")
+end
+function print(msg)
+    component.invoke(Terminal.gpu, "set", 1, Terminal.cy, msg)
+    Terminal.cy = Terminal.cy + 1
 end
 ]]
 
