@@ -30,12 +30,24 @@ function dofile(_path, ...)
     if not fFunc then
         return nil
     else
-        return true, fFunc()
+        if arg then
+            return true, fFunc(table.unpack(arg))
+        else
+            return true, fFunc()
+        end
     end
 end
 
-dofile("./lib/tlib.lua")
---computer.beep(750, 0.5)
+local function touch_callback(_signal, ...)
+    computer.beep(700, 0.2)
+    return true
+end
 
-computer.pullSignal()
+local _, event = dofile("./lib/event.lua")
+event.listen("touch", touch_callback)
+
+while true do
+    event.idle()
+end
+
 computer.shutdown()
