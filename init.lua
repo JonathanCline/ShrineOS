@@ -3,10 +3,10 @@ local component = component
 local table = table
 --local coroutime = coroutine
 
+local gpu = component.list("gpu")()
+local screen = component.list("screen")()
+ 
 do
-    local gpu = component.list("gpu")()
-    local screen = component.list("screen")()
-
     component.invoke(gpu, "bind", screen, true)
     component.invoke(gpu, "set", 1, 1, "MakinPancakes got big gay")
 end
@@ -28,7 +28,7 @@ function dofile(_path, ...)
     local fData = loadfile(_path)
     local fFunc = load(fData)
     if not fFunc then
-        return nil
+        return false
     else
         if arg then
             return true, fFunc(table.unpack(arg))
@@ -38,16 +38,22 @@ function dofile(_path, ...)
     end
 end
 
-local function touch_callback(_signal, ...)
-    computer.beep(700, 0.2)
-    return true
+local fsList = {}
+do
+    local fsIter = component.list("filesystem")
+    local fs = fsIter()
+    while fs do
+        fsList[fs] = fs
+        fs = fsIter()
+    end
 end
 
-local _, event = dofile("./lib/event.lua")
-event.listen("touch", touch_callback)
+local sy = 2
 
-while true do
-    event.idle()
+for k, v in pairs(fsList) do
+    component.invoke(gpu, "set", sy, 1, k)
+    sy = sy + 1
 end
 
+computer.pullSignal()
 computer.shutdown()

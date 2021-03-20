@@ -4,7 +4,7 @@ local computer = computer
 
 local event = {}
 
-local SignalCallbacks = {}
+SignalCallbacks = {}
 
 local function listen_co(callback)
     local cb = callback
