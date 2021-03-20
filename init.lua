@@ -51,7 +51,7 @@ end
 local sy = 2
 
 for k, v in pairs(fsList) do
-    component.invoke(gpu, "set", sy, 1, k)
+    component.invoke(gpu, "set", 1, sy, k)
     sy = sy + 1
 end
 
