@@ -37,7 +37,7 @@ do
     local boot = component.proxy(bootFileSystem)
     local bootFiles = boot.list("/boot/")
     for k, v in pairs(bootFiles) do
-        dofile(v, boot.address)
+        dofile(v)
     end
 end
 
