@@ -34,9 +34,9 @@ end
 
 -- Loop through /boot and run anything in there
 do
-    local bootFiles = component.invoke(bootFileSystem, "list", "boot/")
-    for i, v in ipairs(bootFiles) do
-        dofile(v)
+    local bootFiles = component.invoke(bootFileSystem, "list", "/boot/")
+    for k, v in pairs(bootFiles) do
+        dofile("/boot/" .. v, bootFileSystem)
     end
 end
 
