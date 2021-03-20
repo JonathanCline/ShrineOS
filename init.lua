@@ -30,7 +30,7 @@ function dofile(_path, ...)
     if not fFunc then
         return nil
     else
-        return true, fFunc(table.unpack(arg))
+        return true, fFunc()
     end
 end
 
