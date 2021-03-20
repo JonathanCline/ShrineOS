@@ -7,7 +7,7 @@ Display =
     screen = component.list("screen")(),
     terminal =
     {
-        cy = 1
+        cy = 1,
     }
 }
 
