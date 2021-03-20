@@ -16,5 +16,5 @@ end
 return component
 ]]
 
-local inslib = require("insLib.lua")
+local _, inslib = require("insLib.lua")
 inslib.add_library("component.lua", libString)
