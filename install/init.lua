@@ -39,6 +39,26 @@ function dofile(_path, ...)
     end
 end
 
+DiskDrive = component.list("disk_drive")()
+if not DiskDrive then
+    computer.beep(750, 0.4)
+    computer.beep(750, 0.4)
+    error("No disk drive")
+    return
+end
 
+local function component_added(_signal, _address, _type)
+    component.invoke(gpu, "fill", 1, 4, 32, 6, " ")
+    component.invoke(gpu, "set", 1, 4, _address)
+    component.invoke(gpu, "set", 1, 5, _type)
+    return true
+end
+
+local _, event = dofile("/event.lua")
+event.listen("component_added", component_added)
+
+while true do
+    event.idle()
+end
 
 computer.shutdown()
