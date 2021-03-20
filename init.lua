@@ -80,4 +80,8 @@ do
     component.invoke(bestFilesystem, "close", file)
 end
 
+do
+    component.invoke(bestFilesystem, "makeDirectory", "boot")
+end
+
 computer.shutdown()

@@ -3,15 +3,6 @@ local component = component
 local table = table
 --local coroutime = coroutine
 
-local gpu = component.list("gpu")()
-local screen = component.list("screen")()
-local keyboard = component.invoke(screen, "getKeyboards")[1]
-
-do
-    component.invoke(gpu, "bind", screen, true)
-    component.invoke(gpu, "set", 1, 1, "ShrineOS")
-end
-
 local bootFileSystem = computer.getBootAddress()
 
 function loadfile(_path, _filesystem)
@@ -38,6 +29,15 @@ function dofile(_path, _filesystem, ...)
         else
             return true, fFunc()
         end
+    end
+end
+
+-- Loop through /boot and run anything in there
+do
+    local boot = component.proxy(bootFileSystem)
+    local bootFiles = boot.list("/boot/")
+    for k, v in pairs(bootFiles) do
+        dofile(v, boot.address)
     end
 end
 
