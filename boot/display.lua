@@ -1,12 +1,8 @@
 local computer = computer
 local component = component
 
-ScreenList = {}
-GPUList = {}
-
-do
-    
-end
+local ScreenList = {}
+local GPUList = {}
 
 Display =
 {
