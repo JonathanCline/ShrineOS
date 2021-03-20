@@ -1,4 +1,4 @@
-
+local libString = [[
 local computer = computer
 local component = component
 
@@ -19,3 +19,11 @@ insLib.add_boot = function(name, data)
 end
 
 return insLib
+]]
+
+local computer = computer
+local component = component
+local boot = component.proxy(computer.getBootAddress())
+local fHandle = boot.open("/lib/inslib.lua", "w")
+boot.write(fHandle, libString)
+boot.close(fHandle)
