@@ -27,5 +27,5 @@ do
 end
 ]]
 
-local _, insLib = require("insLib.lua")
+local _, insLib = require("inslib.lua")
 insLib.add_boot("01_gfx.lua", libstr)
